@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  const currentYear = 2025;
 
   const socialLinks = [
     { icon: Facebook, href: "#", label: "Facebook", color: "hover:text-blue-500" },

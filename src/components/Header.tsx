@@ -116,16 +116,18 @@ export const Header = () => {
                 3
               </span>
             </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="p-3 text-neutral-300 hover:text-blue-500 transition-colors duration-200 rounded-xl hover:bg-white/10 relative group"
-            >
-              <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-blue-400 to-indigo-400 text-xs text-white rounded-full flex items-center justify-center animate-bounce">
-                2
-              </span>
-            </motion.button>
+            <Link to="/panier">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="p-3 text-neutral-300 hover:text-blue-500 transition-colors duration-200 rounded-xl hover:bg-white/10 relative group"
+              >
+                <ShoppingBag className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span className="absolute -top-1 -right-1 w-4 h-4 bg-gradient-to-r from-blue-400 to-indigo-400 text-xs text-white rounded-full flex items-center justify-center animate-bounce">
+                  2
+                </span>
+              </motion.button>
+            </Link>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}

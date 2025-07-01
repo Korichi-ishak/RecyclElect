@@ -3,10 +3,9 @@ import { HomePage } from "./pages/HomePage";
 import { Layout } from "./layout/Layout";
 import { Toaster } from 'sonner';
 import { SellPage } from "./pages/SellPage";
-
-// Pages temporaires
-const BuyPage = () => <div className="text-center p-8">Page J'achète</div>;
-const ContactPage = () => <div className="text-center p-8">Page Contact</div>;
+import { BuyPage } from "./pages/BuyPage";
+import { CartPage } from "./pages/CartPage";
+import { ContactPage } from "./pages/ContactPage";
 
 const RootLayout = () => (
   <Layout>
@@ -37,6 +36,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/vendre" element={<SellPage />} />
           <Route path="/j-achete" element={<BuyPage />} />
+          <Route path="/panier" element={<CartPage />} />
           <Route path="/nous-contacter" element={<ContactPage />} />
         </Route>
       </Routes>
