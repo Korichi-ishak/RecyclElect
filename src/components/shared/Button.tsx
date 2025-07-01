@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { LucideIcon } from "lucide-react";
-import { ButtonHTMLAttributes, ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, 'className'> {
   variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -72,7 +72,7 @@ export const Button = ({
         transition={{ duration: 0.2 }}
         className={finalClassName}
         disabled={disabled || loading}
-        {...props}
+        {...(props as any)}
       >
         {buttonContent}
       </motion.button>

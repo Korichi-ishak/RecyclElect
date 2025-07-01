@@ -1,6 +1,7 @@
-import { useState, FormEvent } from "react";
+import { useState } from "react";
+import type { FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FormField, Button } from "../components/shared";
+import { FormField } from "../components/shared";
 import {
   Mail,
   Phone,
@@ -12,9 +13,7 @@ import {
   Image,
   Shield,
   Clock,
-  Award,
   CheckCircle,
-  Star,
   ArrowRight,
   Users,
   Leaf,

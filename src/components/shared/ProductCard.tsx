@@ -24,6 +24,8 @@ export interface Product {
   reviews: number;
   inStock: number;
   warranty: string;
+  description?: string;
+  features?: string[];
 }
 
 interface ProductCardProps {

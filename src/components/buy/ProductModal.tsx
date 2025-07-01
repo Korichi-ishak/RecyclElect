@@ -1,8 +1,6 @@
-import { motion } from "framer-motion";
 import {
   X,
   Heart,
-  Star,
   Check,
   Zap,
   ShieldCheck,
@@ -11,7 +9,7 @@ import {
   ShoppingCart
 } from "lucide-react";
 import { Modal, StarRating, Button } from "../shared";
-import { Product } from "../shared/ProductCard";
+import type { Product } from "../shared/ProductCard";
 
 interface ProductModalProps {
   product: Product | null;

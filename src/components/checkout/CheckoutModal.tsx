@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import {
   CreditCard,
   X,
@@ -10,7 +9,7 @@ import {
   Shield
 } from "lucide-react";
 import { Modal, FormField, Button } from "../shared";
-import { Product } from "../shared/ProductCard";
+import type { Product } from "../shared/ProductCard";
 
 interface DeliveryOption {
   id: string;
@@ -20,10 +19,6 @@ interface DeliveryOption {
   icon: any;
 }
 
-interface CartItem {
-  productId: string;
-  quantity: number;
-}
 
 interface CheckoutModalProps {
   isOpen: boolean;

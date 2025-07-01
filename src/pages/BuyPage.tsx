@@ -2,40 +2,26 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Laptop,
-  Smartphone,
-  Tablet,
   Monitor,
   Cpu,
   HardDrive,
   MemoryStick,
   Battery,
   ShoppingCart,
-  Heart,
   Search,
   Filter,
   Grid3X3,
   List,
-  Star,
-  ShieldCheck,
-  Truck,
-  ArrowRight,
-  ChevronDown,
-  Eye,
   Plus,
   Minus,
   X,
   Check,
-  Zap,
-  Award,
   Shield,
   CreditCard,
-  MapPin,
-  Clock,
-  Package,
   Trash2
 } from "lucide-react";
 import { ProductCard } from "../components/shared";
-import { ProductModal, CategoryFilter } from "../components/buy";
+import { ProductModal } from "../components/buy";
 import { CheckoutModal } from "../components/checkout";
 
 import type { Product } from "../components/shared/ProductCard";

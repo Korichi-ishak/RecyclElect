@@ -2,9 +2,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingCart,
-  Plus,
-  Minus,
-  Trash2,
   CreditCard,
   ArrowLeft,
   Package,
@@ -13,17 +10,13 @@ import {
   Truck,
   Shield,
   CheckCircle,
-  Star,
-  Heart,
-  Eye,
   Award,
   Calendar,
   Download
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { CartItem, DeliveryOptions } from "../components/cart";
+import { CartItem } from "../components/cart";
 import { EmptyState } from "../components/shared";
-import { CheckoutModal } from "../components/checkout";
 
 // Mock data pour la démo
 const mockCartItems = [

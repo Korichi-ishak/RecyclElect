@@ -1,5 +1,5 @@
-import { ReactNode, InputHTMLAttributes, TextareaHTMLAttributes } from "react";
-import { LucideIcon } from "lucide-react";
+import type { ReactNode, InputHTMLAttributes, TextareaHTMLAttributes } from "react";
+import type { LucideIcon } from "lucide-react";
 
 interface BaseFieldProps {
   label: string;
@@ -28,7 +28,7 @@ interface SelectFieldProps extends BaseFieldProps {
 type FormFieldProps = InputFieldProps | TextareaFieldProps | SelectFieldProps;
 
 export const FormField = (props: FormFieldProps) => {
-  const { label, icon: Icon, error, required, className = "", ...fieldProps } = props;
+  const { label, icon: Icon, error, required, className = "" } = props;
 
   const baseInputClasses = `w-full p-3 bg-white/10 border border-white/20 rounded-xl focus:border-primary-400 focus:outline-none transition-colors ${
     Icon ? 'pl-12' : ''
