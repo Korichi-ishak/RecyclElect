@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useForm, type SubmitHandler, type UseFormRegister, type FieldError, type UseFormGetValues } from 'react-hook-form';
+import { useForm, type SubmitHandler, type UseFormRegister, type FieldError, type UseFormGetValues, type UseFormSetValue } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { 
@@ -42,7 +42,7 @@ const steps = [
 
 export const SellPage = () => {
   const [currentStep, setCurrentStep] = useState(0);
-  const { register, handleSubmit, trigger, getValues, watch, reset, formState: { errors } } = useForm<SellFormInputs>({
+  const { register, handleSubmit, trigger, getValues, watch, reset, setValue, formState: { errors } } = useForm<SellFormInputs>({
     resolver: zodResolver(sellSchema),
     defaultValues: {
       photos: []
@@ -155,7 +155,7 @@ export const SellPage = () => {
       </div>
                   )}
                   {currentStep === 2 && (
-                    <PhotoUploadField name="photos" register={register} error={errors.photos} photos={photos} />
+                    <PhotoUploadField name="photos" photos={photos} error={errors.photos} setValue={setValue} />
                   )}
                   {currentStep === 3 && (
                     <ReviewStep getValues={getValues} photos={photos} />
@@ -260,53 +260,70 @@ const TextareaField = ({ label, name, register, error, className = '' }: Textare
           </div>
         );
 
-interface PhotoUploadFieldProps {
-    name: 'photos';
-    register: UseFormRegister<SellFormInputs>;
-    error?: FieldError | { message?: string };
-    photos: File[];
+// Type guard for File
+function isFile(file: unknown): file is File {
+  return typeof File !== 'undefined' && file instanceof File;
 }
 
-const PhotoUploadField = ({ name, register, error, photos }: PhotoUploadFieldProps) => {
-  const { onChange, ...rest } = register(name);
+interface PhotoUploadFieldProps {
+    name: 'photos';
+    error?: FieldError | { message?: string };
+    photos: File[];
+    setValue: UseFormSetValue<SellFormInputs>;
+}
+
+const PhotoUploadField = ({ name, error, photos, setValue }: PhotoUploadFieldProps) => {
+  // Ensure photos array is safe
+  const safePhotos = Array.isArray(photos) ? photos.filter(isFile) : [];
+
+  const handleFiles = (files: FileList | null) => {
+    if (!files) return;
+    const incoming = Array.from(files).filter(isFile);
+    const updated = [...safePhotos, ...incoming].slice(0, 5); // limit to 5
+    setValue(name, updated, { shouldValidate: true });
+  };
+
+  const removePhoto = (index: number) => {
+    const updated = safePhotos.filter((_, i) => i !== index);
+    setValue(name, updated, { shouldValidate: true });
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    handleFiles(e.dataTransfer.files);
+  };
 
   return (
     <div>
       <label className="block text-sm font-medium text-white/80 mb-2">Photos de votre appareil</label>
-      <div className="mt-2 flex justify-center rounded-2xl border-2 border-dashed border-white/20 px-6 py-10">
-        <div className="text-center">
-          <UploadCloud className="mx-auto h-12 w-12 text-white/40" />
-          <div className="mt-4 flex text-sm leading-6 text-white/60">
-            <label
-              htmlFor="file-upload"
-              className="relative cursor-pointer rounded-md font-semibold text-primary-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-primary-600 focus-within:ring-offset-2 focus-within:ring-offset-neutral-900 hover:text-primary-300"
-            >
-              <span>Téléchargez des fichiers</span>
-              <input 
-                id="file-upload" 
-                type="file" 
-                className="sr-only" 
-                multiple
-                accept="image/*"
-                onChange={(e) => {
-                    const files = e.target.files ? Array.from(e.target.files) : [];
-                    onChange({ target: { name, value: files } });
-                }}
-                {...rest}
-              />
-            </label>
-            <p className="pl-1">ou glissez-déposez</p>
-          </div>
-          <p className="text-xs leading-5 text-white/50">PNG, JPG, GIF jusqu'à 10MB (max 5)</p>
-        </div>
+      <div
+        className="mt-2 flex justify-center items-center rounded-2xl border-2 border-dashed border-white/20 px-6 py-10 flex-col text-center cursor-pointer"
+        onDrop={handleDrop}
+        onDragOver={(e) => e.preventDefault()}
+        onClick={() => document.getElementById('file-upload')?.click()}
+      >
+        <UploadCloud className="mx-auto h-12 w-12 text-white/40" />
+        <p className="mt-4 text-sm leading-6 text-white/60">
+          Glissez-déposez ou <span className="font-semibold text-primary-400 hover:text-primary-300">sélectionnez</span> des fichiers
+        </p>
+        <p className="text-xs leading-5 text-white/50">PNG, JPG, GIF jusqu'à 10MB (max 5)</p>
+        <input
+          id="file-upload"
+          type="file"
+          className="hidden"
+          multiple
+          accept="image/*"
+          aria-label="Télécharger des images"
+          onChange={(e) => handleFiles(e.target.files)}
+        />
       </div>
       {error && <p className="mt-2 text-sm text-red-400 flex items-center"><AlertCircle className="w-4 h-4 mr-1" />{error?.message}</p>}
 
-      {photos && photos.length > 0 && (
+      {safePhotos.length > 0 && (
         <div className="mt-6">
           <h3 className="text-sm font-medium text-white/80">Aperçu :</h3>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 mt-4">
-            {photos.map((file, index) => (
+            {safePhotos.map((file, index) => (
               <div key={index} className="relative group">
                 <img
                   src={URL.createObjectURL(file)}
@@ -314,8 +331,8 @@ const PhotoUploadField = ({ name, register, error, photos }: PhotoUploadFieldPro
                   className="w-full h-24 object-cover rounded-lg"
                   onLoad={(e) => URL.revokeObjectURL(e.currentTarget.src)}
                 />
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity">
-                  <button type="button" className="text-red-500 hover:text-red-400">
+                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity rounded-lg">
+                  <button type="button" className="text-red-500 hover:text-red-400" onClick={() => removePhoto(index)}>
                     <Trash2 className="w-6 h-6" />
                   </button>
                 </div>
@@ -323,8 +340,8 @@ const PhotoUploadField = ({ name, register, error, photos }: PhotoUploadFieldPro
             ))}
           </div>
         </div>
-            )}
-          </div>
+      )}
+    </div>
   );
 };
 
@@ -335,6 +352,7 @@ interface ReviewStepProps {
 
 const ReviewStep = ({ getValues, photos }: ReviewStepProps) => {
   const values = getValues();
+  const safePhotos = Array.isArray(photos) ? photos.filter(isFile) : [];
   return (
     <div className="space-y-6">
       <h3 className="text-2xl font-bold text-gradient">Vérifiez vos informations</h3>
@@ -351,15 +369,19 @@ const ReviewStep = ({ getValues, photos }: ReviewStepProps) => {
       <div>
         <h4 className="text-lg font-semibold text-white/80 mb-2">Photos</h4>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          {photos.map((file, index) => (
-            <img
-              key={index}
-              src={URL.createObjectURL(file)}
-              alt={`Aperçu ${index}`}
-              className="w-full h-24 object-cover rounded-lg"
-              onLoad={(e) => URL.revokeObjectURL(e.currentTarget.src)}
-            />
-          ))}
+          {safePhotos.map((file, index) => {
+            if (!file || !(file instanceof File)) return null;
+            
+            return (
+              <img
+                key={index}
+                src={URL.createObjectURL(file)}
+                alt={`Aperçu ${index}`}
+                className="w-full h-24 object-cover rounded-lg"
+                onLoad={(e) => URL.revokeObjectURL(e.currentTarget.src)}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

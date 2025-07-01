@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { companyInfo } from '../data/mockData';
+import { assets } from '../config/assets';
 import { 
-  Zap, 
   Mail, 
   Phone, 
   MapPin, 
@@ -69,16 +69,12 @@ export const Footer = () => {
                 viewport={{ once: true }}
               >
                 {/* Logo */}
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-12 h-12 bg-cyber rounded-2xl flex items-center justify-center shadow-glow">
-                    <Zap className="w-7 h-7 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-2xl font-display font-bold text-gradient">
-                      RecyclElect
-                    </h3>
-                    <p className="text-sm text-white/60">Tech. Reconditionné.</p>
-                  </div>
+                <div className="flex items-center mb-6">
+                  <img 
+                    src={assets.logo} 
+                    alt="RecyclElect Logo" 
+                    className="h-20 w-auto"
+                  />
                 </div>
                 
                 <p className="text-white/70 mb-6 leading-relaxed">

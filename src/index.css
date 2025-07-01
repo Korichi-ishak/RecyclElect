@@ -145,3 +145,11 @@ body {
   background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
   background-size: 1000px 100%;
 }
+
+@font-face {
+  font-family: 'Neon80S';
+  src: url('/fonts/Neon80S-8jL2.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
