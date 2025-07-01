@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { navigationItems } from '../data/mockData';
-import { 
-  Menu, 
-  X, 
-  Zap, 
-  ShoppingBag, 
+import { assets } from '../config/assets';
+import {
+  Menu,
+  X,
+  ShoppingBag,
   Heart,
   Search,
   User
@@ -27,13 +27,6 @@ export const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const logoVariants = {
-    hover: {
-      scale: 1.05,
-      rotate: [0, -10, 10, 0],
-      transition: { duration: 0.5 }
-    }
-  };
 
   const linkVariants = {
     initial: { y: 0 },
@@ -60,26 +53,14 @@ export const Header = () => {
       transition={{ duration: 0.6, type: "spring" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-32">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
-            <motion.div 
-              className="relative"
-              variants={logoVariants}
-              whileHover="hover"
-            >
-              <div className="w-12 h-12 bg-cyber rounded-2xl flex items-center justify-center shadow-glow">
-                <Zap className="w-7 h-7 text-white" />
-              </div>
-            </motion.div>
-            <div className="hidden sm:block">
-              <h1 className="text-2xl font-display font-bold text-gradient">
-                RecyclElect
-              </h1>
-              <p className="text-xs text-white/70 font-medium">
-                Tech. Reconditionné.
-              </p>
-            </div>
+          <Link to="/" className="flex items-center">
+            <img
+              src={assets.logo}
+              alt="RecyclElect Logo"
+              className="w-28 h-28 object-contain"
+            />
           </Link>
 
           {/* Navigation Desktop */}
