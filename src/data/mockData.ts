@@ -331,7 +331,7 @@ export const featuredProducts: Product[] = [
     name: "iPhone 13 Pro",
     category: "Smartphone",
     price: "999.99$",
-    imageUrl: "https://images.unsplash.com/photo-1632433333157-87343b4a3a5a?auto=format&fit=crop&w=600&q=80",
+    imageUrl: "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/iphone-13-pro-max-family-select?wid=470&hei=556&fmt=png-alpha&.v=1629923709000",
     specs: "A15 Bionic, 256GB, Graphite",
     description: '',
     images: [],

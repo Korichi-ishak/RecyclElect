@@ -63,6 +63,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Poppins', 'system-ui', 'sans-serif'],
+        neon: ['Neon80S', 'sans-serif'],
       },
       animation: {
         'float': 'float 3s ease-in-out infinite',
