@@ -12,7 +12,8 @@ import {
   CheckCircle,
   Award,
   Calendar,
-  Download
+  Download,
+  Eye
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { CartItem } from "../components/cart";

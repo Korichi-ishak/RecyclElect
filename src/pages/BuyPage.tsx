@@ -26,16 +26,6 @@ import { CheckoutModal } from "../components/checkout";
 
 import type { Product } from "../components/shared/ProductCard";
 
-interface ExtendedProduct extends Product {
-  category: 'laptop' | 'part';
-  subcategory?: string;
-  reviews: number;
-  inStock: number;
-  warranty: string;
-  description: string;
-  features: string[];
-}
-
 const mockProducts: Product[] = [
   {
     id: '1',
